@@ -184,3 +184,4 @@
 /home/carlos/Documentos/NodeProjects/prueba/espol-back/PoolApi/obj/Debug/net8.0/PoolApi.pdb
 /home/carlos/Documentos/NodeProjects/prueba/espol-back/PoolApi/obj/Debug/net8.0/PoolApi.genruntimeconfig.cache
 /home/carlos/Documentos/NodeProjects/prueba/espol-back/PoolApi/obj/Debug/net8.0/ref/PoolApi.dll
+/home/carlos/Documentos/NodeProjects/prueba/espol-back/PoolApi/obj/Debug/net8.0/PoolApi.sourcelink.json

@@ -1,10 +1,17 @@
+import { useState } from "react";
+
+import ModalAgregar from "../components/ModalAgregar"
+
 const people = [
   { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
   // More people...
 ]
 
 export default function Home() {
-  return (
+  const [open, setOpen] = useState(false);
+  const toggleModal = () => setOpen(!open);
+  return (<>
+  <ModalAgregar isOpen={open} toggle={toggleModal} />
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
@@ -16,7 +23,8 @@ export default function Home() {
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
             type="button"
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={()=>toggleModal()}
+            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer"
           >
             Agregar usuario
           </button>
@@ -69,6 +77,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </div>
+    </div></>
   )
 }
