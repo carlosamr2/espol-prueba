@@ -6,6 +6,8 @@ import axios from "axios";
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [people, setPeople] = useState([]);
+  const [option, setOption] = useState("Agregar");
+  const [idRegistro, setIdRegistro] = useState("");
 
   const fetchData = async () => {
     try {
@@ -13,10 +15,8 @@ export default function Home() {
       await toast.promise(response, {
         loading: "Enviando...",
         success: (res) => {
-          console.log("first", res);
           if (res.status === 200) {
             setPeople(res.data);
-            console.log(res.data);
             return "Se obtuvieron los usuarios correctamente";
           } else {
             return "Error al obtener los usuarios";
@@ -37,7 +37,9 @@ export default function Home() {
 
   const deleteUser = async (id) => {
     try {
-      const response = axios.delete(`http://localhost:50189/api/users/delUser/${id}`);
+      const response = axios.delete(
+        `http://localhost:50189/api/users/delUser/${id}`
+      );
       await toast.promise(response, {
         loading: "Eliminando...",
         success: (res) => {
@@ -69,7 +71,15 @@ export default function Home() {
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
-      <ModalAgregar isOpen={open} toggle={toggleModal} />
+      <ModalAgregar
+        isOpen={open}
+        toggle={toggleModal}
+        option={option}
+        idRegistro={idRegistro}
+        setIdRegistro={setIdRegistro}
+        setOption={setOption}
+        reload={fetchData}
+      />
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
@@ -82,7 +92,10 @@ export default function Home() {
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <button
               type="button"
-              onClick={() => toggleModal()}
+              onClick={() => {
+                setOption("Agregar");
+                toggleModal();
+              }}
               className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer"
             >
               Agregar usuario
@@ -144,12 +157,19 @@ export default function Home() {
                       </td>
                       <td className="py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0 space-x-3">
                         <a
-                          href="#"
+                          onClick={() => {
+                            setOption("Editar");
+                            setIdRegistro(person.id);
+                            toggleModal();
+                          }}
                           className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
                         >
                           Editar
                         </a>
-                        <a onClick={()=>deleteUser(person.id)} className="text-red-600 hover:text-red-800 cursor-pointer">
+                        <a
+                          onClick={() => deleteUser(person.id)}
+                          className="text-red-600 hover:text-red-800 cursor-pointer"
+                        >
                           Eliminar
                         </a>
                       </td>

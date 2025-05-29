@@ -78,7 +78,7 @@ public class UsersController : ControllerBase
 
         usuario.Name = usuarioDto.Name;
         usuario.Email = usuarioDto.Email;
-        usuario.Username = usuarioDto.Username;
+        usuario.Username = usuarioDto.Email.Split('@')[0];
         usuario.Role = usuarioDto.Role;
 
         await _context.SaveChangesAsync();

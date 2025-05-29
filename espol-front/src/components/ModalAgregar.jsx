@@ -1,8 +1,16 @@
 import { Dialog, DialogPanel, DialogBackdrop } from "@headlessui/react";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
-export default function ModalAgregar({ isOpen, toggle }) {
+export default function ModalAgregar({
+  isOpen,
+  toggle,
+  option,
+  idRegistro,
+  setOption,
+  setIdRegistro,
+  reload,
+}) {
   const [formData, setFormData] = useState({
     Name: "",
     Email: "",
@@ -17,25 +25,53 @@ export default function ModalAgregar({ isOpen, toggle }) {
     }));
   };
 
+  const handleClose = () => {
+    setFormData({
+      Name: "",
+      Email: "",
+      Password: "",
+    });
+    setOption("");
+    setIdRegistro("");
+    toggle();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const request = axios
-      .post("http://localhost:50189/api/auth/register", formData)
-      .then((res) => {
-        return res;
-      })
-      .catch((e) => {
-        throw e;
-      });
+    let url;
+    let toasterMessage;
+    let request;
+    if (option === "Editar") {
+      url = `http://localhost:50189/api/users/updateUser/${idRegistro}`;
+      toasterMessage = "Se actualizó el usuario correctamente";
+      request = axios
+        .put(url, formData)
+        .then((res) => {
+          return res;
+        })
+        .catch((e) => {
+          throw e;
+        });
+    } else {
+      url = "http://localhost:50189/api/auth/register";
+      toasterMessage = "Se creó el usuario correctamente";
+      request = axios
+        .post(url, formData)
+        .then((res) => {
+          return res;
+        })
+        .catch((e) => {
+          throw e;
+        });
+    }
 
     await toast.promise(request, {
       loading: "Enviando...",
       success: (res) => {
-        console.log("first", res);
         if (res.status === 200) {
-          toggle();
-          return "Se guardó el usuario correctamente";
+          handleClose();
+          reload();
+          return toasterMessage;
         } else {
           return "Error al enviar el mensaje";
         }
@@ -52,6 +88,40 @@ export default function ModalAgregar({ isOpen, toggle }) {
     });
   };
 
+  const getUser = async (id) => {
+    try {
+      const response = axios.get(
+        `http://localhost:50189/api/users/getUser/${id}`
+      );
+      await toast.promise(response, {
+        loading: "Obteniendo...",
+        success: (res) => {
+          if (res.status === 200) {
+            setFormData(res.data);
+            return "Se obtuvo el registro correctamente";
+          } else {
+            return "Error al obtener el usuario";
+          }
+        },
+        error: (e) => {
+          if (e.response.status === 500) {
+            return "Error interno del servidor";
+          } else if (e.response.status === 400) {
+            return "Error en los datos enviados";
+          } else {
+            return "Error al enviar el mensaje";
+          }
+        },
+      });
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (option === "Editar") {
+      getUser(idRegistro);
+    }
+  }, [isOpen]);
+
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
@@ -59,7 +129,7 @@ export default function ModalAgregar({ isOpen, toggle }) {
         as="div"
         className="relative z-20"
         open={isOpen}
-        onClose={() => toggle()}
+        onClose={() => handleClose()}
       >
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-full min-w-full p-2 text-center">
@@ -87,13 +157,14 @@ export default function ModalAgregar({ isOpen, toggle }) {
                         htmlFor="Name"
                         className="block text-sm/6 font-medium text-gray-900"
                       >
-                        First name
+                        Nombre completo
                       </label>
                       <div className="mt-2">
                         <input
                           id="Name"
                           name="Name"
                           type="text"
+                          value={formData.Name ? formData.Name : formData.name}
                           onChange={handleChange}
                           required
                           autoComplete="given-name"
@@ -107,13 +178,16 @@ export default function ModalAgregar({ isOpen, toggle }) {
                         htmlFor="Email"
                         className="block text-sm/6 font-medium text-gray-900"
                       >
-                        Email address
+                        Correo electrónico
                       </label>
                       <div className="mt-2">
                         <input
                           id="Email"
                           name="Email"
                           type="Email"
+                          value={
+                            formData.Email ? formData.Email : formData.email
+                          }
                           onChange={handleChange}
                           required
                           autoComplete="Email"
@@ -145,7 +219,7 @@ export default function ModalAgregar({ isOpen, toggle }) {
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                   <button
                     type="button"
-                    onClick={() => toggle()}
+                    onClick={() => handleClose()}
                     className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
                   >
                     Cancelar
