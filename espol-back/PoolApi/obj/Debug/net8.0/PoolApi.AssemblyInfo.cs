@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PoolApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d7ca01ecf66e9ca1d411c31d5d01063b76ecd6e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ec1d0467e52b31e8c3e598f86f68fa5daab1585")]
 [assembly: System.Reflection.AssemblyProductAttribute("PoolApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PoolApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -11,7 +11,7 @@ using PoolApi.Data;
 namespace PoolApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250529045213_InitialCreate")]
+    [Migration("20250530020153_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

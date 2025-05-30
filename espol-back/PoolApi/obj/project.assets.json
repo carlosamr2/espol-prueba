@@ -6337,19 +6337,19 @@
     ]
   },
   "packageFolders": {
-    "/home/carlos/.nuget/packages/": {}
+    "/home/galgomedia/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/carlos/Documentos/NodeProjects/prueba/espol-back/PoolApi/PoolApi.csproj",
+      "projectUniqueName": "/home/galgomedia/Documentos/NodeProjects/espol-prueba/espol-back/PoolApi/PoolApi.csproj",
       "projectName": "PoolApi",
-      "projectPath": "/home/carlos/Documentos/NodeProjects/prueba/espol-back/PoolApi/PoolApi.csproj",
-      "packagesPath": "/home/carlos/.nuget/packages/",
-      "outputPath": "/home/carlos/Documentos/NodeProjects/prueba/espol-back/PoolApi/obj/",
+      "projectPath": "/home/galgomedia/Documentos/NodeProjects/espol-prueba/espol-back/PoolApi/PoolApi.csproj",
+      "packagesPath": "/home/galgomedia/.nuget/packages/",
+      "outputPath": "/home/galgomedia/Documentos/NodeProjects/espol-prueba/espol-back/PoolApi/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/carlos/.nuget/NuGet/NuGet.Config"
+        "/home/galgomedia/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -6367,11 +6367,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -6432,7 +6427,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/carlos/.dotnet/sdk/8.0.406/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.116/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

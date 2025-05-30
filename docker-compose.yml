@@ -1,0 +1,47 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong@Passw0rd"
+    ports:
+      - "1433:1433"
+    restart: unless-stopped
+    volumes:
+      - sql_data:/var/opt/mssql
+  espol-front:
+    build:
+      context: ./espol-front
+    container_name: espol-front
+    volumes:
+      - ./espol-front:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    command: npm run dev
+    networks:
+      - network-espol
+    depends_on:
+      - espol-back
+
+  espol-back:
+    build:
+      context: ./espol-back
+    container_name: espol-back
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "50189:80"
+    depends_on:
+      - sqlserver
+    command: dotnet run
+    networks:
+      - network-espol
+
+volumes:
+  sql_data:
+
+networks:
+  network-espol:
+    driver: bridge
